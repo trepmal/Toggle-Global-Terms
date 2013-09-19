@@ -21,11 +21,9 @@ class Toggle_Global_Terms_Enabled {
 		add_action( 'admin_print_footer_scripts', array( &$this, 'scripts' ) );
 	}
 
-	var $title = 'Global Terms is %%';
-
 	function get_title( $status ) {
-		$label = $status ? 'enabled' : 'disabled';
-		return str_replace( '%%', $label, $this->title );
+		$label = $status ? __( 'enabled', 'fills in a blank, see below', 'toggle-global-terms' ) : __( 'disabled', 'fills in a blank, see below', 'toggle-global-terms');
+		return sprintf( __( 'Global Terms is %s', 'toggle-global-terms' ), $label );
 	}
 
 	function insert_toolbar_item( $wp_admin_bar ) {
@@ -34,7 +32,7 @@ class Toggle_Global_Terms_Enabled {
 			'title' => $this->get_title( global_terms_enabled() ),
 			'href' => '#',
 			'meta'  => array(
-				'title' => __('Toggle Global Terms'),
+				'title' => __('Toggle Global Terms', 'toggle-global-terms'),
 			),
 		) );
 	}
