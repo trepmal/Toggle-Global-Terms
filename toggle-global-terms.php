@@ -7,6 +7,12 @@ $toggle_global_terms_enabled = new Toggle_Global_Terms_Enabled;
 class Toggle_Global_Terms_Enabled {
 
 	function __construct() {
+		add_action( 'init', array( &$this, 'init' ) );
+	}
+
+	function init() {
+		if ( ! is_multisite() || ! is_super_admin() ) return;
+
 		// create menu button
 		add_action( 'admin_bar_menu', array( &$this, 'insert_toolbar_item' ), 99 );
 		// register ajax callback
