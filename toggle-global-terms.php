@@ -7,18 +7,18 @@ $toggle_global_terms_enabled = new Toggle_Global_Terms_Enabled;
 class Toggle_Global_Terms_Enabled {
 
 	function __construct() {
-		add_action( 'init', array( &$this, 'init' ) );
+		add_action( 'init', array( $this, 'init' ) );
 	}
 
 	function init() {
 		if ( ! is_multisite() || ! is_super_admin() ) return;
 
 		// create menu button
-		add_action( 'admin_bar_menu', array( &$this, 'insert_toolbar_item' ), 99 );
+		add_action( 'admin_bar_menu',              array( $this, 'insert_toolbar_item' ), 99 );
 		// register ajax callback
-		add_action( 'wp_ajax_toggle_global_terms', array( &$this, 'ajax_callback' ) );
+		add_action( 'wp_ajax_toggle_global_terms', array( $this, 'ajax_callback' ) );
 		// put js in footer
-		add_action( 'admin_print_footer_scripts', array( &$this, 'scripts' ) );
+		add_action( 'admin_print_footer_scripts',  array( $this, 'scripts' ) );
 	}
 
 	function get_title( $status ) {
@@ -28,11 +28,11 @@ class Toggle_Global_Terms_Enabled {
 
 	function insert_toolbar_item( $wp_admin_bar ) {
 		$wp_admin_bar->add_menu( array(
-			'id' => 'toggle-global-terms',
+			'id'    => 'toggle-global-terms',
 			'title' => $this->get_title( global_terms_enabled() ),
-			'href' => '#',
+			'href'  => '#',
 			'meta'  => array(
-				'title' => __('Toggle Global Terms', 'toggle-global-terms'),
+				'title' => __( 'Toggle Global Terms', 'toggle-global-terms' ),
 			),
 		) );
 	}
@@ -49,7 +49,7 @@ class Toggle_Global_Terms_Enabled {
 	function scripts() {
 		?><script>
 jQuery(document).ready(function($) {
-	$('#wp-admin-bar-toggle-global-terms a').click( function( ev ) {
+	$('#wp-admin-bar-toggle-global-terms a').on( 'click', function( ev ) {
 		var menu = $(this);
 		ev.preventDefault();
 		$.post( ajaxurl, {
